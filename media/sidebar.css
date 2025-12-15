@@ -1,0 +1,1134 @@
+/* Azure DevOps Code Companion - Sidebar Styles
+ * Design System: 100% VS Code CSS Variables for theme compatibility
+ * Features: Accessibility (ARIA, focus states), Skeleton screens, Fuzzy search, Animations
+ */
+
+/* ========================================
+   CSS Custom Properties (VS Code Native)
+   ======================================== */
+:root {
+    /* Spacing */
+    --spacing-xs: 4px;
+    --spacing-sm: 8px;
+    --spacing-md: 12px;
+    --spacing-lg: 16px;
+    --spacing-xl: 24px;
+
+    /* Border radius */
+    --radius-sm: 3px;
+    --radius-md: 4px;
+    --radius-lg: 6px;
+    --radius-full: 9999px;
+
+    /* Transitions */
+    --transition-fast: 0.1s ease;
+    --transition-normal: 0.15s ease;
+    --transition-slow: 0.25s ease;
+
+    /* Shadows (using VS Code colors) */
+    --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.1);
+    --shadow-md: 0 2px 8px rgba(0, 0, 0, 0.15);
+    --shadow-lg: 0 4px 16px rgba(0, 0, 0, 0.2);
+}
+
+/* ========================================
+   Base Styles
+   ======================================== */
+* {
+    box-sizing: border-box;
+}
+
+body {
+    margin: 0;
+    padding: 0;
+    font-family: var(--vscode-font-family);
+    font-size: 13px;
+    line-height: 1.4;
+    color: var(--vscode-foreground);
+    background-color: var(--vscode-sideBar-background);
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+
+/* Visually hidden but accessible */
+.visually-hidden {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
+    border: 0;
+}
+
+/* ========================================
+   Container
+   ======================================== */
+.container {
+    padding: var(--spacing-md);
+}
+
+/* ========================================
+   Header
+   ======================================== */
+.header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: var(--spacing-md);
+    padding-bottom: var(--spacing-sm);
+    border-bottom: 1px solid var(--vscode-panel-border);
+}
+
+.header h3 {
+    margin: 0;
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--vscode-foreground);
+}
+
+.header-actions {
+    display: flex;
+    gap: var(--spacing-sm);
+}
+
+/* ========================================
+   Icon Buttons
+   ======================================== */
+.icon-button {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 28px;
+    height: 28px;
+    padding: 0;
+    background: transparent;
+    color: var(--vscode-foreground);
+    border: 1px solid transparent;
+    border-radius: var(--radius-md);
+    cursor: pointer;
+    transition: all var(--transition-normal);
+}
+
+.icon-button:hover {
+    background: var(--vscode-toolbar-hoverBackground);
+    border-color: var(--vscode-focusBorder);
+}
+
+.icon-button:focus-visible {
+    outline: 2px solid var(--vscode-focusBorder);
+    outline-offset: 1px;
+}
+
+.icon-button svg {
+    width: 16px;
+    height: 16px;
+}
+
+/* ========================================
+   Quick Actions Bar
+   ======================================== */
+.quick-actions {
+    display: flex;
+    gap: var(--spacing-xs);
+    margin-bottom: var(--spacing-md);
+    padding: var(--spacing-sm);
+    background: var(--vscode-editor-background);
+    border: 1px solid var(--vscode-panel-border);
+    border-radius: var(--radius-md);
+    flex-wrap: wrap;
+}
+
+.action-button {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--spacing-xs);
+    padding: var(--spacing-xs) var(--spacing-sm);
+    background: var(--vscode-button-secondaryBackground);
+    color: var(--vscode-button-secondaryForeground);
+    border: 1px solid transparent;
+    border-radius: var(--radius-sm);
+    font-size: 11px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all var(--transition-normal);
+    white-space: nowrap;
+}
+
+.action-button:hover {
+    background: var(--vscode-button-secondaryHoverBackground);
+    border-color: var(--vscode-focusBorder);
+}
+
+.action-button:focus-visible {
+    outline: 2px solid var(--vscode-focusBorder);
+    outline-offset: 1px;
+}
+
+.action-button svg,
+.action-button i {
+    width: 14px;
+    height: 14px;
+    font-size: 14px;
+}
+
+/* ========================================
+   Search Container
+   ======================================== */
+.search-container {
+    position: relative;
+    margin-bottom: var(--spacing-md);
+}
+
+.search-input-wrapper {
+    position: relative;
+    display: flex;
+    align-items: center;
+}
+
+#searchInput,
+.search-input {
+    width: 100%;
+    padding: var(--spacing-sm) var(--spacing-lg) var(--spacing-sm) 32px;
+    background: var(--vscode-input-background);
+    color: var(--vscode-input-foreground);
+    border: 1px solid var(--vscode-input-border, transparent);
+    border-radius: var(--radius-md);
+    font-size: 13px;
+    outline: none;
+    transition: border-color var(--transition-normal), box-shadow var(--transition-normal);
+}
+
+#searchInput:focus,
+.search-input:focus {
+    border-color: var(--vscode-focusBorder);
+    box-shadow: 0 0 0 1px var(--vscode-focusBorder);
+}
+
+#searchInput::placeholder,
+.search-input::placeholder {
+    color: var(--vscode-input-placeholderForeground);
+}
+
+.search-icon {
+    position: absolute;
+    left: 10px;
+    opacity: 0.6;
+    pointer-events: none;
+}
+
+[data-action="clearSearch"] {
+    position: absolute;
+    right: 8px;
+    background: none;
+    border: none;
+    color: var(--vscode-foreground);
+    opacity: 0.6;
+    cursor: pointer;
+    padding: 4px;
+    display: none;
+}
+
+[data-action="clearSearch"]:hover {
+    opacity: 1;
+}
+
+/* Search highlight */
+.highlight {
+    background: var(--vscode-editor-findMatchHighlightBackground);
+    border-radius: 2px;
+    padding: 0 2px;
+}
+
+/* ========================================
+   Status Overview
+   ======================================== */
+.status-overview {
+    margin-bottom: var(--spacing-md);
+    padding: var(--spacing-sm);
+    background: var(--vscode-editor-background);
+    border: 1px solid var(--vscode-panel-border);
+    border-radius: var(--radius-md);
+}
+
+.status-badges {
+    display: flex;
+    gap: var(--spacing-xs);
+    flex-wrap: wrap;
+    justify-content: center;
+}
+
+.status-badge {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: var(--spacing-xs) var(--spacing-sm);
+    min-width: 60px;
+    background: transparent;
+    border: 1px solid transparent;
+    border-radius: var(--radius-md);
+    cursor: pointer;
+    transition: all var(--transition-normal);
+    text-align: center;
+}
+
+.status-badge:hover {
+    background: var(--vscode-list-hoverBackground);
+    border-color: var(--vscode-focusBorder);
+    transform: translateY(-1px);
+}
+
+.status-badge:focus-visible {
+    outline: 2px solid var(--vscode-focusBorder);
+    outline-offset: 1px;
+}
+
+.status-badge[aria-pressed="true"] {
+    background: var(--vscode-list-activeSelectionBackground);
+    border-color: var(--vscode-focusBorder);
+}
+
+/* Status badge color variants */
+.status-badge.state-new {
+    color: var(--vscode-charts-blue);
+}
+
+.status-badge.state-active,
+.status-badge.state-in-progress {
+    color: var(--vscode-charts-orange);
+}
+
+.status-badge.state-resolved {
+    color: var(--vscode-testing-iconPassed);
+}
+
+.status-badge.state-done,
+.status-badge.state-closed {
+    color: var(--vscode-descriptionForeground);
+}
+
+.status-name {
+    font-size: 10px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.status-count {
+    font-size: 16px;
+    font-weight: 700;
+    line-height: 1.2;
+}
+
+.status-percentage {
+    font-size: 9px;
+    opacity: 0.7;
+}
+
+.status-badge.total {
+    background: var(--vscode-badge-background);
+    color: var(--vscode-badge-foreground);
+}
+
+/* ========================================
+   Filter Container
+   ======================================== */
+.filter-container {
+    margin-bottom: var(--spacing-md);
+}
+
+.filter-row {
+    display: flex;
+    gap: var(--spacing-xs);
+    margin-bottom: var(--spacing-xs);
+    flex-wrap: wrap;
+}
+
+.filter-container select {
+    flex: 1;
+    min-width: 100px;
+    padding: var(--spacing-xs) var(--spacing-sm);
+    background: var(--vscode-dropdown-background);
+    color: var(--vscode-dropdown-foreground);
+    border: 1px solid var(--vscode-dropdown-border, transparent);
+    border-radius: var(--radius-md);
+    font-size: 11px;
+    cursor: pointer;
+    outline: none;
+    transition: border-color var(--transition-normal);
+}
+
+.filter-container select:hover {
+    border-color: var(--vscode-focusBorder);
+}
+
+.filter-container select:focus {
+    border-color: var(--vscode-focusBorder);
+    box-shadow: 0 0 0 1px var(--vscode-focusBorder);
+}
+
+.filter-checkboxes {
+    display: flex;
+    gap: var(--spacing-sm);
+    flex-wrap: wrap;
+    padding: var(--spacing-xs);
+    background: var(--vscode-editor-inactiveSelectionBackground);
+    border-radius: var(--radius-md);
+}
+
+.checkbox-label {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-xs);
+    font-size: 11px;
+    cursor: pointer;
+    transition: color var(--transition-normal);
+}
+
+.checkbox-label:hover {
+    color: var(--vscode-textLink-foreground);
+}
+
+.checkbox-label input[type="checkbox"] {
+    width: 14px;
+    height: 14px;
+    cursor: pointer;
+    accent-color: var(--vscode-focusBorder);
+}
+
+/* ========================================
+   Timer Container
+   ======================================== */
+.timer-container {
+    margin-bottom: var(--spacing-md);
+    padding: var(--spacing-md);
+    background: linear-gradient(135deg, var(--vscode-button-background), var(--vscode-button-hoverBackground));
+    color: var(--vscode-button-foreground);
+    border-radius: var(--radius-lg);
+    box-shadow: var(--shadow-md);
+    animation: slideDown var(--transition-slow) ease-out;
+}
+
+@keyframes slideDown {
+    from {
+        opacity: 0;
+        transform: translateY(-8px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.timer-info {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-sm);
+    margin-bottom: var(--spacing-sm);
+}
+
+.timer-icon {
+    animation: pulse 2s ease-in-out infinite;
+}
+
+.timer-icon svg {
+    width: 16px;
+    height: 16px;
+}
+
+@keyframes pulse {
+    0%, 100% { opacity: 1; transform: scale(1); }
+    50% { opacity: 0.8; transform: scale(1.05); }
+}
+
+#timer-display {
+    font-size: 16px;
+    font-weight: 700;
+    font-variant-numeric: tabular-nums;
+    font-family: var(--vscode-editor-font-family), monospace;
+}
+
+#timer-display.paused {
+    opacity: 0.6;
+    animation: blink 1.5s ease-in-out infinite;
+}
+
+@keyframes blink {
+    0%, 100% { opacity: 0.6; }
+    50% { opacity: 0.3; }
+}
+
+#timer-task {
+    flex: 1;
+    font-size: 12px;
+    opacity: 0.9;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.timer-controls {
+    display: flex;
+    gap: var(--spacing-xs);
+}
+
+.timer-controls button {
+    padding: var(--spacing-xs) var(--spacing-sm);
+    background: rgba(255, 255, 255, 0.15);
+    color: inherit;
+    border: 1px solid rgba(255, 255, 255, 0.25);
+    border-radius: var(--radius-sm);
+    font-size: 11px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all var(--transition-normal);
+}
+
+.timer-controls button:hover {
+    background: rgba(255, 255, 255, 0.25);
+    border-color: rgba(255, 255, 255, 0.4);
+}
+
+.timer-controls button:focus-visible {
+    outline: 2px solid white;
+    outline-offset: 1px;
+}
+
+/* ========================================
+   Work Items List
+   ======================================== */
+.work-items-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-xs);
+}
+
+/* ========================================
+   Work Item Card
+   ======================================== */
+.work-item-card {
+    position: relative;
+    background: var(--vscode-list-inactiveSelectionBackground);
+    border: 1px solid transparent;
+    border-radius: var(--radius-md);
+    padding: var(--spacing-sm);
+    cursor: pointer;
+    transition: all var(--transition-normal);
+    overflow: hidden;
+}
+
+/* Left accent bar */
+.work-item-card::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 0;
+    bottom: 0;
+    width: 3px;
+    background: var(--vscode-focusBorder);
+    transform: scaleY(0);
+    transform-origin: top;
+    transition: transform var(--transition-normal);
+}
+
+.work-item-card:hover {
+    background: var(--vscode-list-hoverBackground);
+    border-color: var(--vscode-panel-border);
+    box-shadow: var(--shadow-sm);
+}
+
+.work-item-card:hover::before {
+    transform: scaleY(1);
+}
+
+.work-item-card:focus-visible {
+    outline: 2px solid var(--vscode-focusBorder);
+    outline-offset: 1px;
+}
+
+/* Active timer state */
+.work-item-card.active-timer {
+    background: color-mix(in srgb, var(--vscode-button-background) 10%, var(--vscode-list-activeSelectionBackground));
+    border-color: var(--vscode-focusBorder);
+}
+
+.work-item-card.active-timer::before {
+    transform: scaleY(1);
+    animation: pulseBar 2s ease-in-out infinite;
+}
+
+@keyframes pulseBar {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.6; }
+}
+
+/* Compact mode */
+.work-item-card.compact {
+    padding: var(--spacing-xs);
+}
+
+/* Work item header */
+.work-item-header {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-xs);
+    margin-bottom: var(--spacing-xs);
+    flex-wrap: wrap;
+}
+
+.work-item-id {
+    font-size: 11px;
+    font-weight: 600;
+    color: var(--vscode-textLink-foreground);
+    padding: 1px 6px;
+    background: var(--vscode-textBlockQuote-background);
+    border-radius: var(--radius-full);
+}
+
+.work-item-type {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--spacing-xs);
+    font-size: 10px;
+    font-weight: 500;
+    padding: 2px 6px;
+    border-radius: var(--radius-full);
+}
+
+.work-item-type svg {
+    width: 12px;
+    height: 12px;
+}
+
+.type-label {
+    display: none;
+}
+
+@media (min-width: 300px) {
+    .type-label {
+        display: inline;
+    }
+}
+
+/* Work item type colors */
+.work-item-type.task {
+    background: color-mix(in srgb, var(--vscode-charts-blue) 15%, transparent);
+    color: var(--vscode-charts-blue);
+}
+
+.work-item-type.bug {
+    background: color-mix(in srgb, var(--vscode-editorError-foreground) 15%, transparent);
+    color: var(--vscode-editorError-foreground);
+}
+
+.work-item-type.user-story {
+    background: color-mix(in srgb, var(--vscode-testing-iconPassed) 15%, transparent);
+    color: var(--vscode-testing-iconPassed);
+}
+
+.work-item-type.feature {
+    background: color-mix(in srgb, var(--vscode-charts-purple) 15%, transparent);
+    color: var(--vscode-charts-purple);
+}
+
+.work-item-type.epic {
+    background: color-mix(in srgb, var(--vscode-charts-orange) 15%, transparent);
+    color: var(--vscode-charts-orange);
+}
+
+/* Priority badges */
+.work-item-priority {
+    font-size: 9px;
+    font-weight: 700;
+    padding: 2px 4px;
+    border-radius: var(--radius-sm);
+}
+
+.priority-critical {
+    background: var(--vscode-editorError-foreground);
+    color: var(--vscode-editor-background);
+}
+
+.priority-high {
+    background: var(--vscode-editorWarning-foreground);
+    color: var(--vscode-editor-background);
+}
+
+.priority-medium {
+    background: var(--vscode-charts-blue);
+    color: var(--vscode-editor-background);
+}
+
+.priority-low {
+    background: var(--vscode-badge-background);
+    color: var(--vscode-badge-foreground);
+}
+
+/* Timer indicator */
+.timer-indicator {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    margin-left: auto;
+    padding: 2px 6px;
+    background: var(--vscode-button-background);
+    color: var(--vscode-button-foreground);
+    border-radius: var(--radius-full);
+    font-size: 9px;
+    font-weight: 600;
+    animation: pulse 2s ease-in-out infinite;
+}
+
+.timer-indicator svg {
+    width: 8px;
+    height: 8px;
+}
+
+/* Work item title */
+.work-item-title {
+    font-size: 12px;
+    font-weight: 500;
+    margin-bottom: var(--spacing-xs);
+    line-height: 1.4;
+    color: var(--vscode-foreground);
+    word-wrap: break-word;
+}
+
+/* Work item meta */
+.work-item-meta {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-sm);
+    font-size: 10px;
+    color: var(--vscode-descriptionForeground);
+    margin-bottom: var(--spacing-xs);
+}
+
+.work-item-state {
+    padding: 2px 6px;
+    border-radius: var(--radius-full);
+    font-weight: 500;
+}
+
+.state-new {
+    background: color-mix(in srgb, var(--vscode-charts-blue) 20%, transparent);
+    color: var(--vscode-charts-blue);
+}
+
+.state-active,
+.state-in-progress {
+    background: color-mix(in srgb, var(--vscode-charts-orange) 20%, transparent);
+    color: var(--vscode-charts-orange);
+}
+
+.state-resolved {
+    background: color-mix(in srgb, var(--vscode-testing-iconPassed) 20%, transparent);
+    color: var(--vscode-testing-iconPassed);
+}
+
+.state-done,
+.state-closed {
+    background: var(--vscode-badge-background);
+    color: var(--vscode-badge-foreground);
+}
+
+.work-item-assignee {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+}
+
+.work-item-assignee svg {
+    width: 12px;
+    height: 12px;
+    opacity: 0.6;
+}
+
+/* Quick status change button */
+.status-quick-change {
+    margin-left: auto;
+    padding: 2px 8px;
+    background: var(--vscode-button-secondaryBackground);
+    color: var(--vscode-button-secondaryForeground);
+    border: 1px solid transparent;
+    border-radius: var(--radius-sm);
+    font-size: 10px;
+    cursor: pointer;
+    transition: all var(--transition-normal);
+}
+
+.status-quick-change:hover {
+    background: var(--vscode-button-secondaryHoverBackground);
+    border-color: var(--vscode-focusBorder);
+}
+
+/* Tags */
+.work-item-tags {
+    display: flex;
+    gap: var(--spacing-xs);
+    flex-wrap: wrap;
+    margin-bottom: var(--spacing-sm);
+}
+
+.tag {
+    font-size: 10px;
+    padding: 2px 8px;
+    background: var(--vscode-badge-background);
+    color: var(--vscode-badge-foreground);
+    border-radius: var(--radius-full);
+}
+
+/* Work item actions */
+.work-item-actions {
+    display: flex;
+    gap: 4px;
+    margin-top: var(--spacing-xs);
+    padding-top: var(--spacing-xs);
+    border-top: 1px solid var(--vscode-panel-border);
+}
+
+.work-item-actions button {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: var(--spacing-xs);
+    background: transparent;
+    color: var(--vscode-foreground);
+    border: 1px solid var(--vscode-panel-border);
+    border-radius: var(--radius-sm);
+    cursor: pointer;
+    transition: all var(--transition-normal);
+}
+
+.work-item-actions button:hover {
+    background: var(--vscode-toolbar-hoverBackground);
+    border-color: var(--vscode-focusBorder);
+}
+
+.work-item-actions button:focus-visible {
+    outline: 2px solid var(--vscode-focusBorder);
+    outline-offset: 1px;
+}
+
+.work-item-actions button svg {
+    width: 14px;
+    height: 14px;
+}
+
+/* ========================================
+   Kanban Board
+   ======================================== */
+.kanban-board {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: var(--spacing-md);
+    overflow-x: auto;
+    padding-bottom: var(--spacing-md);
+}
+
+.kanban-column {
+    background: var(--vscode-editorWidget-background);
+    border: 1px solid var(--vscode-panel-border);
+    border-radius: var(--radius-lg);
+    padding: var(--spacing-sm);
+    min-height: 200px;
+}
+
+.kanban-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: var(--spacing-sm);
+    padding: var(--spacing-sm);
+    background: var(--vscode-editor-background);
+    border-radius: var(--radius-md);
+}
+
+.kanban-title {
+    font-size: 12px;
+    font-weight: 600;
+}
+
+.kanban-count {
+    font-size: 11px;
+    padding: 2px 6px;
+    background: var(--vscode-badge-background);
+    color: var(--vscode-badge-foreground);
+    border-radius: var(--radius-full);
+}
+
+.kanban-items {
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-xs);
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+/* ========================================
+   Time Report
+   ======================================== */
+.time-report {
+    background: var(--vscode-editor-background);
+    border: 1px solid var(--vscode-panel-border);
+    border-radius: var(--radius-lg);
+    padding: var(--spacing-lg);
+}
+
+.time-report-summary {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: var(--spacing-lg);
+    padding-bottom: var(--spacing-md);
+    border-bottom: 1px solid var(--vscode-panel-border);
+}
+
+.time-report-summary h3 {
+    margin: 0;
+    font-size: 14px;
+    font-weight: 600;
+}
+
+.total-time {
+    font-size: 18px;
+    font-weight: 700;
+    color: var(--vscode-testing-iconPassed);
+}
+
+.time-report-item {
+    background: var(--vscode-list-inactiveSelectionBackground);
+    border-radius: var(--radius-md);
+    padding: var(--spacing-md);
+    margin-bottom: var(--spacing-sm);
+    transition: box-shadow var(--transition-normal);
+}
+
+.time-report-item:hover {
+    box-shadow: var(--shadow-sm);
+}
+
+.time-report-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: var(--spacing-xs);
+}
+
+.time-duration {
+    font-weight: 600;
+    color: var(--vscode-testing-iconPassed);
+}
+
+.time-entries {
+    margin-top: var(--spacing-sm);
+    font-size: 11px;
+    color: var(--vscode-descriptionForeground);
+}
+
+.time-entry {
+    padding: var(--spacing-xs) 0;
+    border-bottom: 1px solid var(--vscode-panel-border);
+}
+
+.time-entry:last-child {
+    border-bottom: none;
+}
+
+/* ========================================
+   Loading States - Skeleton Screens
+   ======================================== */
+.loading-skeleton {
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-sm);
+}
+
+.skeleton-card {
+    height: 100px;
+    background: linear-gradient(
+        90deg,
+        var(--vscode-list-inactiveSelectionBackground) 0%,
+        var(--vscode-editor-background) 50%,
+        var(--vscode-list-inactiveSelectionBackground) 100%
+    );
+    background-size: 200% 100%;
+    border-radius: var(--radius-md);
+    animation: shimmer 1.5s infinite;
+}
+
+@keyframes shimmer {
+    0% { background-position: 200% 0; }
+    100% { background-position: -200% 0; }
+}
+
+/* Old loading spinner (fallback) */
+.loading {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: var(--spacing-xl);
+    color: var(--vscode-descriptionForeground);
+}
+
+.loading svg,
+.loading i {
+    width: 32px;
+    height: 32px;
+    margin-bottom: var(--spacing-md);
+    animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+    from { transform: rotate(0deg); }
+    to { transform: rotate(360deg); }
+}
+
+/* ========================================
+   Empty State
+   ======================================== */
+.empty-state {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: var(--spacing-xl);
+    text-align: center;
+    color: var(--vscode-descriptionForeground);
+}
+
+.empty-icon {
+    margin-bottom: var(--spacing-md);
+    opacity: 0.5;
+}
+
+.empty-icon svg {
+    width: 48px;
+    height: 48px;
+}
+
+.empty-state p {
+    margin: 0;
+    font-size: 13px;
+}
+
+/* ========================================
+   Error State
+   ======================================== */
+.error-message {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-md);
+    padding: var(--spacing-lg);
+    background: color-mix(in srgb, var(--vscode-editorError-foreground) 10%, var(--vscode-editor-background));
+    color: var(--vscode-editorError-foreground);
+    border: 1px solid color-mix(in srgb, var(--vscode-editorError-foreground) 30%, transparent);
+    border-radius: var(--radius-md);
+    margin: var(--spacing-md) 0;
+}
+
+.error-message svg {
+    flex-shrink: 0;
+    width: 24px;
+    height: 24px;
+}
+
+/* ========================================
+   Scrollbar Styling
+   ======================================== */
+::-webkit-scrollbar {
+    width: 8px;
+    height: 8px;
+}
+
+::-webkit-scrollbar-track {
+    background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+    background: var(--vscode-scrollbarSlider-background);
+    border-radius: var(--radius-md);
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: var(--vscode-scrollbarSlider-hoverBackground);
+}
+
+::-webkit-scrollbar-thumb:active {
+    background: var(--vscode-scrollbarSlider-activeBackground);
+}
+
+/* ========================================
+   Responsive Adjustments
+   ======================================== */
+@media (max-width: 350px) {
+    .quick-actions {
+        flex-direction: column;
+    }
+
+    .action-button {
+        width: 100%;
+        justify-content: center;
+    }
+
+    .filter-row {
+        flex-direction: column;
+    }
+
+    .filter-container select {
+        width: 100%;
+    }
+
+    .status-badges {
+        justify-content: space-around;
+    }
+}
+
+/* ========================================
+   Focus Management for Accessibility
+   ======================================== */
+:focus:not(:focus-visible) {
+    outline: none;
+}
+
+:focus-visible {
+    outline: 2px solid var(--vscode-focusBorder);
+    outline-offset: 1px;
+}
+
+/* Skip link for keyboard navigation */
+.skip-link {
+    position: absolute;
+    top: -40px;
+    left: 0;
+    background: var(--vscode-button-background);
+    color: var(--vscode-button-foreground);
+    padding: var(--spacing-sm) var(--spacing-md);
+    z-index: 100;
+    text-decoration: none;
+}
+
+.skip-link:focus {
+    top: 0;
+}
+
+/* ========================================
+   Reduced Motion Support
+   ======================================== */
+@media (prefers-reduced-motion: reduce) {
+    *,
+    *::before,
+    *::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+    }
+}
