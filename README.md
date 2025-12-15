@@ -4,6 +4,7 @@
 [![Installs](https://img.shields.io/visual-studio-marketplace/i/YonasValentinMougaardKristensen.azure-devops-code-companion)](https://marketplace.visualstudio.com/items?itemName=YonasValentinMougaardKristensen.azure-devops-code-companion)
 [![Rating](https://img.shields.io/visual-studio-marketplace/r/YonasValentinMougaardKristensen.azure-devops-code-companion)](https://marketplace.visualstudio.com/items?itemName=YonasValentinMougaardKristensen.azure-devops-code-companion)
 [![Sponsor](https://img.shields.io/github/sponsors/YonasValentin?label=Sponsor&logo=github)](https://github.com/sponsors/YonasValentin)
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 
 > **Love this extension?** [Become a sponsor](https://github.com/sponsors/YonasValentin) to support ongoing development and new features.
 
@@ -167,6 +168,53 @@ Manage work items, track time, create branches, and submit pull requests without
 ## Changelog
 
 See [CHANGELOG.md](CHANGELOG.md) for version history.
+
+---
+
+## Contributing
+
+Contributions are welcome! Here's how to get started:
+
+### Development Setup
+
+```bash
+# Clone the repository
+git clone https://github.com/YonasValentin/azure-devops-code-companion.git
+cd azure-devops-code-companion
+
+# Install dependencies
+npm install
+
+# Compile and watch for changes
+npm run watch
+```
+
+### Running the Extension
+
+1. Open the project in VS Code
+2. Press `F5` to launch the Extension Development Host
+3. The extension will be available in the new VS Code window
+
+### Building for Production
+
+```bash
+# Type check, lint, and bundle
+npm run compile
+
+# Package for distribution
+npm run package
+
+# Create .vsix file
+npx vsce package
+```
+
+### Submitting Changes
+
+1. Fork the repository
+2. Create a feature branch (`git checkout -b feature/amazing-feature`)
+3. Commit your changes (`git commit -m 'Add amazing feature'`)
+4. Push to the branch (`git push origin feature/amazing-feature`)
+5. Open a Pull Request
 
 ---
 
